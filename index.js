@@ -76,6 +76,25 @@ server.delete('/users/:id', (req, res) => {
 })
 
 
+// PUT REQUEST WITH USER ID
+
+server.put('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    const changes = req.body;
+
+    Users.update(userId, changes)
+    .then(updated => {
+        if (updated) {
+            res.status(200).json(updated);
+        } else {
+            res.status(404).json({ errorMessage: "Please provide name and bio for the user." });
+        }
+    })
+    .catch(err => {
+        res.status(500).json({ error: "The user information could not be modified." });
+    })
+})
+
 
 
 
